@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Nutzer</h2>
+<ul class="user-list">
+{% for user in users %}<li><a href="{{ url_for('get_movies', user_id=user.id) }}">{{ user.name }}</a></li>
+{% else %}<li>Noch keine Nutzer. Lege den ersten Nutzer an.</li>{% endfor %}
+</ul>
+<h2>Neuen Nutzer hinzufügen</h2>
+<form action="{{ url_for('create_user') }}" method="post">
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+<label for="name">Name</label> <input id="name" name="name" required maxlength="100" value="{{ request.form.get('name', '') }}">
+<button type="submit">Nutzer hinzufügen</button>
+</form>
+{% endblock %}
