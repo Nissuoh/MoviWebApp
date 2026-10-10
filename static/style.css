@@ -1,0 +1,5 @@
+body { font-family: sans-serif; max-width: 900px; margin: 2rem auto; padding: 0 1rem; }
+form { margin: 1rem 0; }
+input, button { padding: .4rem; }
+.movie-list > li { margin-bottom: 2rem; }
+[role="alert"] { color: #a00000; }
