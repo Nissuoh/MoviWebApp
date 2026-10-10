@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html lang="de">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>MoviWeb</title><link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"></head>
+<body>
+<header><h1>MoviWeb</h1><nav aria-label="Hauptnavigation"><a href="{{ url_for('index') }}">Alle Nutzer</a></nav></header>
+<main class="container">
+{% for message in get_flashed_messages() %}<p role="status">{{ message }}</p>{% endfor %}
+{% if error %}<p role="alert">{{ error }}</p>{% endif %}
+{% block content %}{% endblock %}
+</main>
+</body></html>
