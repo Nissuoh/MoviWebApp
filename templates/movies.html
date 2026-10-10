@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Lieblingsfilme von {{ user.name }}</h2>
+<ul class="movie-list">
+{% for movie in movies %}
+<li>
+<h3>{{ movie.name }}</h3>
+<p>Regie: {{ movie.director }} · Jahr: {{ movie.year if movie.year is not none else 'N/A' }}</p>
+{% if movie.poster_url %}<img src="{{ movie.poster_url }}" alt="Poster: {{ movie.name }}" width="150" loading="lazy">{% else %}<p>Kein Poster verfügbar.</p>{% endif %}
+<form action="{{ url_for('update_movie', user_id=user.id, movie_id=movie.id) }}" method="post">
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+<label for="title-{{ movie.id }}">Filmtitel bearbeiten</label>
+<input id="title-{{ movie.id }}" name="title" value="{{ movie.name }}" required maxlength="200">
+<button type="submit">Titel speichern</button>
+</form>
+<form action="{{ url_for('delete_movie', user_id=user.id, movie_id=movie.id) }}" method="post">
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+<button type="submit">Film entfernen</button>
+</form>
+</li>
+{% else %}<li>Noch keine Lieblingsfilme.</li>{% endfor %}
+</ul>
+<h2>Film hinzufügen</h2>
+<form action="{{ url_for('add_movie', user_id=user.id) }}" method="post">
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+<label for="movie-title">Filmtitel für OMDb</label>
+<input id="movie-title" name="title" required maxlength="200" value="{{ request.form.get('title', '') }}">
+<button type="submit">Film hinzufügen</button>
+</form>
+{% endblock %}
